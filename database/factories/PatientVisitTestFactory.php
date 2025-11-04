@@ -3,7 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\PatientVisit;
+use App\Models\PatientLab;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PatientVisitTest>
  */
@@ -17,7 +18,9 @@ class PatientVisitTestFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'patient_visit_id' => PatientVisit::inRandomOrder()->first()->id ?? PatientVisit::factory(),
+            'test_id' => PatientLab::inRandomOrder()->first()->id ?? PatientLab::factory(),
+            
         ];
     }
 }
