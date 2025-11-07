@@ -10,7 +10,7 @@ use App\Models\PatientLab;
  */
 class PatientVisitTestFactory extends Factory
 {
-    /**
+    /** 
      * Define the model's default state.
      *
      * @return array<string, mixed>

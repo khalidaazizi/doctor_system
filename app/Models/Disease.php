@@ -10,7 +10,8 @@ class Disease extends Model
     /** @use HasFactory<\Database\Factories\DiseaseFactory> */
     use HasFactory;
 
-    protected $fillable = ['disease_name'];
+    protected $guarded = ['id'];
+
 
     public function visits()
     {
