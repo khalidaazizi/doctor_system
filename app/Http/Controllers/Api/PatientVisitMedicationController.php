@@ -36,4 +36,6 @@ class PatientVisitMedicationController extends Controller
         $visitMedication->delete();
         return response()->json(['message' => 'Deleted successfully']);
     }
+
+
 }

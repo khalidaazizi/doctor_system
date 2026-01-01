@@ -13,7 +13,25 @@ class PatientVisitTest extends Model
 
     protected $guarded=['id'];
 
-    
+    protected $casts = [
+        'status' => 'string',
+    ];
+
+     protected static function booted()
+    {
+        static::saving(function ($test) {
+            // اگر نتیجه پر شده باشد، status حتما باید 'completed' باشد
+            if (!empty($test->test_result)) {
+                $test->status = 'completed';
+            } else {
+                // اگر نتیجه خالی است و status 'completed' باشد، آن را روی 'pending' تنظیم می‌کنیم
+                if ($test->status === 'completed') {
+                    $test->status = 'pending';
+                }
+            }
+        });
+    }
+
     public function visit()
     {
         return $this->belongsTo(PatientVisit::class, 'patient_visit_id');

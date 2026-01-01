@@ -11,19 +11,17 @@ use App\Http\Controllers\Api\PatientLabController;
 use App\Http\Controllers\Api\PatientVisitDiseaseController;
 use App\Http\Controllers\Api\PatientVisitMedicationController;
 use App\Http\Controllers\Api\PatientVisitTestController;
-
+use App\Http\Controllers\Api\PatientHistoryController;
 
 // مسیر پیش‌فرض لاراول برای دریافت اطلاعات یوزر لاگین‌شده
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
-
-Route::get('/test', function() {
-    return ['message' => 'API works!'];
-});
 
 
 // مسیرهای API برای هر کنترلر
@@ -36,3 +34,22 @@ Route::apiResource('labs', PatientLabController::class);
 Route::apiResource('visit-diseases', PatientVisitDiseaseController::class);
 Route::apiResource('visit-medications', PatientVisitMedicationController::class);
 Route::apiResource('visit-tests', PatientVisitTestController::class);
+
+
+
+
+// routes/api.php
+Route::get('patients/{id}/history', [PatientHistoryController::class, 'getPatientHistory']);
+
+
+
+
+
+
+
+
+
+
+
+
+

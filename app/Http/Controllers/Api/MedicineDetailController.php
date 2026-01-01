@@ -10,18 +10,24 @@ class MedicineDetailController extends Controller
 {
     public function index()
     {
-        return response()->json(MedicineDetail::with('medicine')->get());
+        // با مرتب‌سازی و فیلتر
+        $details = MedicineDetail::with('medicine')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+        return response()->json($details);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'medicines_id' => 'required|exists:medicines,id',
-            'packing' => 'required|string|max:40',
+            'packing' => 'required|string|max:100',
+            'status' => 'required|in:Available,Not Available',
         ]);
 
         $detail = MedicineDetail::create($validated);
-        return response()->json($detail, 201);
+        return response()->json($detail->load('medicine'), 201);
     }
 
     public function show(MedicineDetail $medicineDetail)
@@ -32,11 +38,12 @@ class MedicineDetailController extends Controller
     public function update(Request $request, MedicineDetail $medicineDetail)
     {
         $validated = $request->validate([
-            'packing' => 'sometimes|string|max:40',
+           'packing' => 'required|string|max:100',
+           'status' => 'required|in:Available,Not Available',
         ]);
 
         $medicineDetail->update($validated);
-        return response()->json($medicineDetail);
+        return response()->json($medicineDetail->load('medicine'));
     }
 
     public function destroy(MedicineDetail $medicineDetail)

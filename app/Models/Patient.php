@@ -16,5 +16,12 @@ class Patient extends Model
         return $this->hasMany(PatientVisit::class, 'patient_id');
     }
 
-
+    public function chronicConditions()
+    {
+        return $this->hasMany(PatientChronicCondition::class, 'patient_id');
+    }
+     public function medicalInfo()
+    {
+        return $this->hasOne(PatientMedicalInfo::class, 'patient_id');
+    }
 }

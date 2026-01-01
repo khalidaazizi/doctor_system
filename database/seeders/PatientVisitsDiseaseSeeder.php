@@ -2,17 +2,29 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\PatientVisitsDisease;
+use Illuminate\Support\Facades\DB;
 
 class PatientVisitsDiseaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-       PatientVisitsDisease::factory(30)->create();
+        $visitIds = DB::table('patient_visits')->pluck('id')->toArray();
+        $diseaseIds = DB::table('diseases')->pluck('id')->toArray();
+
+        foreach ($visitIds as $visitId) {
+            shuffle($diseaseIds);
+            $selected = array_slice($diseaseIds, 0, rand(1,2));
+
+            foreach ($selected as $dId) {
+                DB::table('patient_visits_diseases')->insert([
+                    'patient_visit_id' => $visitId,
+                    'disease_id' => $dId,
+   
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
     }
 }

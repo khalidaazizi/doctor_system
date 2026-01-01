@@ -2,30 +2,21 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Medicine;
-use App\Models\MedicineDetail;
+use Illuminate\Support\Facades\DB;
 
 class MedicineSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $medicines = ['Paracetamol', 'Amoxicillin', 'Ibuprofen', 'Cetrizine'];
+        $medicines = ['Paracetamol','Amoxicillin','Ibuprofen','Metformin','Aspirin','Omeprazole','Cefixime','Azithromycin','Loratadine','Captopril'];
 
         foreach ($medicines as $name) {
-            $medicine = Medicine::create(['medicines_name' => $name]);
-            // هر دارو چند مدل بسته‌بندی دارد
-            $types = ['Tablet', 'Syrup', 'Capsule'];
-            foreach ($types as $pack) {
-                MedicineDetail::create([
-                    'medicines_id' => $medicine->id,
-                    'packing' => $pack
-                ]);
-            }
+            DB::table('medicines')->insert([
+                'medicines_name' => $name,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
     }
 }

@@ -21,4 +21,6 @@ class MedicineDetail extends Model
     {
         return $this->hasMany(PatientVisitsMedication::class, 'medicines_detail_id');
     }
+
+
 }

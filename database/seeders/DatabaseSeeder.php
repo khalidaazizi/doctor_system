@@ -2,30 +2,43 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // غیرفعال کردن FK قبل از حذف داده‌ها
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // حذف داده‌ها
+        DB::table('patient_visit_tests')->truncate();
+        DB::table('patient_visits_medications')->truncate();
+        DB::table('patient_visits_diseases')->truncate();
+        DB::table('patient_visits')->truncate();
+        DB::table('patient_medical_infos')->truncate();
+        DB::table('patients')->truncate();
+        DB::table('users')->truncate();
+        DB::table('medicine_details')->truncate();
+        DB::table('medicines')->truncate();
+        DB::table('patient_labs')->truncate();
+        DB::table('diseases')->truncate();
 
-         $this->call([
+        // فعال کردن FK دوباره
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        // اجرای Seederها به ترتیب درست
+        $this->call([
+            DoctorSeeder::class,
             PatientSeeder::class,
+            PatientMedicalInfoSeeder::class,
+            PatientVisitSeeder::class,
             DiseaseSeeder::class,
             MedicineSeeder::class,
+            MedicineDetailSeeder::class,
             PatientLabSeeder::class,
             PatientVisitsDiseaseSeeder::class,
             PatientVisitsMedicationSeeder::class,

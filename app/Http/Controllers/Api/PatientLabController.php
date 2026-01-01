@@ -43,4 +43,14 @@ class PatientLabController extends Controller
         $lab->delete();
         return response()->json(['message' => 'Deleted successfully']);
     }
+    public function visits()
+{
+    return $this->belongsToMany(
+        PatientVisit::class,
+        'patient_visit_tests',
+        'test_id',
+        'patient_visit_id'
+    );
+}
+
 }

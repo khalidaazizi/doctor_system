@@ -2,19 +2,27 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Disease;
+use Illuminate\Support\Facades\DB;
+
 class DiseaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $diseases = ['Flu', 'Cold', 'COVID-19', 'Asthma', 'Diabetes'];
-        foreach ($diseases as $name) {
-            Disease::create(['disease_name' => $name]);
+        $diseases = [
+            'Flu','Cold','COVID-19','Asthma','Diabetes',
+            'Migraine','Tuberculosis','Hepatitis','Chickenpox','Malaria'
+        ];
+
+        $data = [];
+        foreach ($diseases as $d) {
+            $data[] = [
+                'disease_name' => $d,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
         }
+
+        DB::table('diseases')->insert($data);
     }
 }

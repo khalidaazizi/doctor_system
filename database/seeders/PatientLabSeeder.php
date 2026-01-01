@@ -2,20 +2,24 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\PatientLab;
+use Illuminate\Support\Facades\DB;
 
 class PatientLabSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-   public function run(): void
+    public function run(): void
     {
-        $tests = ['Blood Test', 'X-Ray', 'Urine Test', 'CT Scan', 'MRI'];
-        foreach ($tests as $test) {
-            PatientLab::create(['test_name' => $test]);
+        $tests = ['CBC','Glucose','Lipid Profile','Liver Function','Kidney Function','Urine Test','Blood Pressure','ECG','Thyroid Test','HIV Test'];
+
+        $data = [];
+        foreach ($tests as $t) {
+            $data[] = [
+                'test_name' => $t,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
         }
+
+        DB::table('patient_labs')->insert($data);
     }
 }
